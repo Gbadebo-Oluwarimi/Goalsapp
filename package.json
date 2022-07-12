@@ -6,18 +6,22 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node Backend/Server.js",
-    "server": "nodemon Backend/Server.js"
+    "server": "nodemon Backend/Server.js",
+    "client": "npm start --prefix frontend"
   },
   "author": "Gbadebo Oluwarimi",
   "license": "MIT",
   "devDependencies": {
+    "concurrently": "^7.2.2",
     "nodemon": "^2.0.19"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.4.4"
   }
 }

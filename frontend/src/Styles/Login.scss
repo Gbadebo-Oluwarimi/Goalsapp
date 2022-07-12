@@ -1,0 +1,88 @@
+.login{
+    background-color: rgba(87, 151, 151, 0.219);
+    width:100%;
+    min-height: 100vh;
+    position:absolute;
+    @media (max-width:500px) {
+        background-color: #fff;
+    }
+    .content{
+        margin:0 auto;
+        margin-top:30px;
+        margin-bottom: 30px;
+        background-color: #fff;
+        min-height:800px;
+        max-width:500px;
+        border-radius:10px;
+        .maincontent{
+            padding:30px;
+            .alreadyhave{
+                margin-top:20px;
+            }
+            button{
+                width:100%;
+                padding: 20px;
+                margin-top:30px;
+                border: none;
+                font-weight: bold;
+                border-radius: 5px;
+                cursor:pointer;
+                color:#fff;
+                background-color: rgba(108, 43, 170, 0.637);
+            }
+            .text{
+                .contenty{
+                    width:100%;
+                    padding:30px;
+                    border-radius: 7px;
+                    min-height:40px;
+                    margin-top:20px;
+                    background-color: rgba(87, 151, 151, 0.219);
+                }
+            }
+            .form{
+                .firstinput{
+                    margin-bottom:20px;
+                    label{
+                        font-weight: bold;
+                    }
+                    input{
+                        width:100%;
+                        margin-top:10px;
+                        padding:16px;
+                        outline: none;
+                        font-size: 20px;
+                        border: none;
+                        background-color:rgba(87, 151, 151, 0.219);
+                        border-radius: 8px;
+                        &:focus{
+                            outline: 3px solid rgba(137, 43, 226, 0.61);
+                        }
+                    }
+                }
+            }
+            .header{
+                padding-bottom: 70px;
+            }
+        }
+        .icon{
+            position: relative;
+            top:-17px;
+            left:36px;
+            width:40px;
+            height:40px;
+            border-radius: 100%;
+            background-color: blueviolet;
+            align-items: center;
+            text-align: center;
+            svg{
+                width:25px;
+                height:25px;
+                color:#fff;
+                margin:0 auto;
+                margin-top:8px;
+                cursor:pointer;
+            }
+        }
+    }
+}

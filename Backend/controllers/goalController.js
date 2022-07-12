@@ -1,10 +1,11 @@
 
 const goal = require('../model/goalModel')
+const User = require('../model/userModel')
 //@desc   Get goals
 //@route  Get /api/goals
 //@access Private
 const getGoals = async(req, res) => {
-    const goals = await goal.find()
+    const goals = await goal.find({user:req.user.id})
 
     res.status(200).json(goals)
 }
@@ -18,7 +19,8 @@ const setGoals = async(req, res) => {
         throw new Error('Plesase add a text field')
     }
     const goals = await goal.create({
-        text:req.body.text
+        text:req.body.text,
+        user:req.user.id
     })
     res.status(200).json(goals)
 }
@@ -33,6 +35,15 @@ const UpdateGoals = async(req, res) => {
         res.status(400)
         throw new Error('goal not found')
     }
+    const user = await User.findById(req.user.id)
+    if(!user){
+        res.status(401)
+        throw new Error("User not found");
+    }
+    if(goals.user.toString() !== user.id){
+        res.status(401)
+        throw new Error("User not authorized")
+    }
     const updatedgoal = await goal.findByIdAndUpdate(req.params.id, req.body, {new: true})
     res.status(200).json(updatedgoal)
 }
@@ -43,9 +54,22 @@ const UpdateGoals = async(req, res) => {
 //@access Private
 
 const deleteGoals = async(req, res) => {
-    const id = req.params.id
-    const deleteid = await goal.findByIdAndDelete(id)
-    res.status(200).json(deleteid)
+   const goals = await goal.findById(req.params.id)
+   if(!goal){
+    res.status(400)
+    throw new Error("no goals found")
+   }
+   const user = await User.findById(req.user.id)
+    if(!user){
+        res.status(401)
+        throw new Error("User not found");
+    }
+    if(goals.user.toString() !== user.id){
+        res.status(401)
+        throw new Error("User not authorized")
+    }
+   await goal.remove()
+   res.status(200).json({id: req.params.id})
 }
 
 
