@@ -1,4 +1,5 @@
 
+const { isObjectIdOrHexString } = require('mongoose')
 const goal = require('../model/goalModel')
 const User = require('../model/userModel')
 //@desc   Get goals
@@ -6,7 +7,6 @@ const User = require('../model/userModel')
 //@access Private
 const getGoals = async(req, res) => {
     const goals = await goal.find({user:req.user.id})
-
     res.status(200).json(goals)
 }
 
@@ -35,12 +35,12 @@ const UpdateGoals = async(req, res) => {
         res.status(400)
         throw new Error('goal not found')
     }
-    const user = await User.findById(req.user.id)
-    if(!user){
+
+    if(!req.user){
         res.status(401)
         throw new Error("User not found");
     }
-    if(goals.user.toString() !== user.id){
+    if(goals.user.toString() !== req.user.id){
         res.status(401)
         throw new Error("User not authorized")
     }
@@ -59,16 +59,15 @@ const deleteGoals = async(req, res) => {
     res.status(400)
     throw new Error("no goals found")
    }
-   const user = await User.findById(req.user.id)
-    if(!user){
+    if(!req.user){
         res.status(401)
         throw new Error("User not found");
     }
-    if(goals.user.toString() !== user.id){
+    if(goals.user.toString() !== req.user.id){
         res.status(401)
         throw new Error("User not authorized")
     }
-   await goal.remove()
+   await goal.deleteOne()
    res.status(200).json({id: req.params.id})
 }
 

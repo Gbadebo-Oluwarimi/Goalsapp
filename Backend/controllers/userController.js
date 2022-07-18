@@ -5,9 +5,9 @@ const User = require('../model/userModel');
 
 
 const registerUser = asyncHandler(async(req, res) => {
-    const { name, email, password } = req.body
+    const { username, email, password } = req.body
 
-    if(!name || !email || !password){
+    if(!username || !email || !password){
         res.status(400)
         throw new Error("Please fill in all fields")
     }
@@ -20,7 +20,7 @@ const registerUser = asyncHandler(async(req, res) => {
     const salt = await bcrypt.genSalt(10)
     const Hashedpassword = await bcrypt.hash(password, salt);
 
-    const user = await User.create({name, email, password:Hashedpassword})
+    const user = await User.create({name:username, email, password:Hashedpassword})
     if(user){
         res.status(201).json({
             _id:user.id,
@@ -30,7 +30,7 @@ const registerUser = asyncHandler(async(req, res) => {
         })
     }else{
         res.status(400)
-        throw new Error("Invalid User Datas")
+        throw new Error("Invalid User Data")
     }
 })
 
@@ -52,12 +52,7 @@ const loginUser = asyncHandler(async(req, res) => {
 })
 
 const getUser = asyncHandler(async(req, res) => {
-   const {_id, name, email} = await User.findById(req.user.id)
-   res.status(200).json({
-    id: _id,
-    name,
-    email
-   })
+   res.status(200).json(req.user)
 })
 
 

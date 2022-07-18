@@ -1,9 +1,51 @@
 import React from 'react'
 import '../Styles/Login.scss'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { toast } from 'react-toastify'
 import { NavLink } from 'react-router-dom'
+import { register, reset } from '../features/Auth/authSlice'
+import Spinner from '../components/Spinner'
 
 
 const Register = ({back}) => {
+
+    const { user, isLoading, isError, isSuccess, message } = useSelector((state) => state.auth)
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [password2, setPassword2] = useState('')
+    const [username, setUsername] = useState('')
+    const navigate = useNavigate();
+    const dispatch = useDispatch()
+
+
+    useEffect(() => {
+        if(isError){
+            toast.error(message)
+        }
+        if(isSuccess || user){
+            navigate('/Dashboard')
+        }
+        dispatch(reset())
+    }, [user, isError,isSuccess, message, navigate,dispatch])
+    const onSubmit =(e) => {
+        e.preventDefault()
+console.log(password, username)
+        if(password !== password2){
+            toast.error("Passwords Do not Match")
+        }else{
+            const userdata = {
+                username, email, password
+            }
+            dispatch(register(userdata))
+        }
+    }
+
+    if(isLoading){
+        return <Spinner/>
+    }
   return (
     <div className='login'>
         <div className='content'>
@@ -24,26 +66,26 @@ const Register = ({back}) => {
                     <div className='firstinput'>
                         <label>Your Username</label>
                         <legend><small>Please fill in your username</small></legend>
-                        <input type="text" placeholder="e.g John Doe"></input>
+                        <input type="text" placeholder="e.g John Doe" value={username} onChange={(e) => setUsername(e.target.value)}></input>
                     </div>
 
                     <div className='firstinput'>
                         <label>Email</label>
                         <legend><small>Please fill in your email</small></legend>
-                        <input type="email" placeholder="johndoe@gmail.coom"></input>
+                        <input type="email" placeholder="johndoe@gmail.coom"  value={email} onChange={(e) => setEmail(e.target.value)}></input>
                         <small>must contain @ and some special keywords</small>
                     </div>
 
                     <div className='firstinput'>
                         <label>Create Password</label>
-                        <legend><small>Please fill in your username</small></legend>
-                        <input type="password"></input>
+                        <legend><small>Please fill in your password</small></legend>
+                        <input type="password"  value={password} onChange={(e) => setPassword(e.target.value)}></input>
                     </div>
 
                     <div className='firstinput'>
                         <label>Confirm Password</label>
                         <legend><small>Please confirm password</small></legend>
-                        <input type="password"></input>
+                        <input type="password"  value={password2} onChange={(e) => setPassword2(e.target.value)}></input>
                     </div>
                     
                 </div>
@@ -62,7 +104,7 @@ const Register = ({back}) => {
                   
                   </small>
                 </div>
-                  <button>Register </button>
+                  <button onClick={(e) => onSubmit(e)}>Register </button>
             </div>
         </div>
     </div>
