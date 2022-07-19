@@ -48,7 +48,7 @@ const Dashboard = () => {
     <div className='dashboard-bg'>
       <Creategoaladd/>
     {creategoals ? <Creategoals updatecreategoals={updatecreategoals}/> : null}
-    <div className='user'>
+      <div className='user'>
       <h2 style={{paddingTop:"20px"}}>{user && user.name}</h2>
       </div>
       <div className='d-content'>
