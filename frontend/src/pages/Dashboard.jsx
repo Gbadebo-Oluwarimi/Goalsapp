@@ -10,12 +10,14 @@ import { getGoals, goalsr } from '../features/Goals/goalSlice'
 import Spinner from '../components/Spinner'
 import { toast } from 'react-toastify'
 import Goalitem from '../components/Goalitem'
+import Creategoaladd from '../components/Creategoaladd'
 const Dashboard = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { user } = useSelector((state) => state.auth)
   const [creategoals, setcreategoals] = useState(false);
   const { goals, isLoading, isError, message } = useSelector((state) => state.goals)
+ console.log(window.innerWidth)
   const updatecreategoals = () => {
     setcreategoals(!creategoals);
   }
@@ -43,9 +45,12 @@ const Dashboard = () => {
   }
   return (
     <>
-   
     <div className='dashboard-bg'>
+      <Creategoaladd/>
     {creategoals ? <Creategoals updatecreategoals={updatecreategoals}/> : null}
+    <div className='user'>
+      <h2 style={{paddingTop:"20px"}}>{user && user.name}</h2>
+      </div>
       <div className='d-content'>
         <div className='left-nav'>
             <div className='top-card'>
@@ -53,23 +58,23 @@ const Dashboard = () => {
 
               </div>
               <div className="text2">
-                <h3>{user && user.name}</h3>
-                <small>Feedback Board</small>
+                <h3>{user && user.name} Goals</h3>
+                
               </div>
             </div>
             <button onClick={() => updatecreategoals()}>Create Goals</button>
         </div>
         <div className='right-nav'>
           <div className="nav-right">
-              <div>Connect with us on </div>
+              <div>List of Goals Created</div>
          <div><button onClick={() => onlogout()}>Logout</button></div>
          </div>
-        <div>
+        <div className='goalitems'>
           { goals.length > 0 ? (<div>
             {goals.map((goal) => (
               <Goalitem key={goal._id} goal={goal}/>
             ))}
-          </div>) : (<h3><center>You have nor set any goals</center></h3>) }
+          </div>) : (<h3 style={{paddingTop:"20px"}}><center>You have not set any goals 🏹 </center></h3>) }
         </div>
         </div>
       </div>
