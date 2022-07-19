@@ -1,7 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import '../Styles/Dashboard.scss'
-import Header from '../components/Header'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout, reset } from '../features/Auth/authSlice' 
 import { useNavigate } from 'react-router-dom'
