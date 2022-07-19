@@ -53,7 +53,7 @@ const Dashboard = () => {
 
               </div>
               <div className="text2">
-                <h3>{user && user.name} Mentor</h3>
+                <h3>{user && user.name}</h3>
                 <small>Feedback Board</small>
               </div>
             </div>
