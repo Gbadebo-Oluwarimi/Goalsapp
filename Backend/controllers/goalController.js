@@ -67,7 +67,7 @@ const deleteGoals = async(req, res) => {
         res.status(401)
         throw new Error("User not authorized")
     }
-   await goal.deleteOne()
+   await goal.findByIdAndDelete(req.params.id)
    res.status(200).json({id: req.params.id})
 }
 
