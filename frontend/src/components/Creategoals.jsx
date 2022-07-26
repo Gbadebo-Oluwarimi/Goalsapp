@@ -10,7 +10,6 @@ const Creategoals = ({updatecreategoals}) => {
     const sendgoal = () =>{
         dispatch(createGoal({text}));
         setText('')
-        console.log('djd')
         updatecreategoals()
     }
 

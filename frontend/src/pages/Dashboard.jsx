@@ -16,7 +16,6 @@ const Dashboard = () => {
   const { user } = useSelector((state) => state.auth)
   const [creategoals, setcreategoals] = useState(false);
   const { goals, isLoading, isError, message } = useSelector((state) => state.goals)
- console.log(window.innerWidth)
   const updatecreategoals = () => {
     setcreategoals(!creategoals);
   }
